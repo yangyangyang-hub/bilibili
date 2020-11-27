@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div class="btnparent">
+      <div class="btnparent" @click="registerClick">
           <div class="loginbtn" >{{btntext}}</div>
       </div>
   </div>
@@ -8,7 +8,12 @@
 
 <script>
 export default {
-    props: ['btntext']
+    props: ['btntext'],
+    methods: {
+        registerClick() {
+            this.$emit('registerSubmit')
+        }
+    }
 
 }
 </script>

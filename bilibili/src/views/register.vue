@@ -12,17 +12,17 @@
     <Login-text label="账号" 
       placeholder="请输入账号" 
       rule="^.{6,16}$"
-      @inputchange=" res => name = res"
+      @inputchange=" res => username = res"
       ></Login-text>
 
     <Login-text label="密码" 
       placeholder="请输入密码" 
       type="password" 
       rule="^.{6,16}$"
-      @inputchange=" res => name = res"
+      @inputchange=" res => password = res"
       ></Login-text>
 
-    <login-btn btntext="注册"></login-btn>
+    <login-btn btntext="注册" @registerSubmit="registerSubmit"></login-btn>
   </div>
 </template>
 
@@ -33,10 +33,28 @@ import LoginText from '../components/common/LoginText.vue'
 import LoginBtn from '../components/common/LoginBtn.vue'
 
 export default {
+  data() {
+    return {
+      name: '',
+      username: '',
+      password: ''
+    }
+  },
   components:{
     LoginTop,
     LoginText,
     LoginBtn
+  },
+  methods: {
+    registerSubmit() {
+      if(this.name && this.username && this.password) {
+        this.$http.post('/register', {
+          name:this.name,
+          username:this.username,
+          password: this.password,
+        })
+      }
+    }
   }
 }
 </script>
