@@ -3,13 +3,15 @@ import App from './App.vue'
 import router from './router'
 
 // 引入vant插件
-import Vant from 'vant'
+import Vant, { Toast } from 'vant'
 import 'vant/lib/index.css'
 Vue.use(Vant)
+Vue.prototype.$msg = Toast
 
 //引入axios
 import http from '../http.js'
 Vue.prototype.$http = http
+
 
 Vue.config.productionTip = false
 
