@@ -46,9 +46,9 @@ export default {
     LoginBtn
   },
   methods: {
-    registerSubmit() {
-      if(this.name && this.username && this.password) {
-        this.$http.post('/register', {
+    async registerSubmit() {
+       if(this.name && this.username && this.password) {
+        const res = await this.$http.post('/register', {
           name:this.name,
           username:this.username,
           password: this.password,
