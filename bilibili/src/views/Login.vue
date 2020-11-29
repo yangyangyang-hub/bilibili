@@ -47,11 +47,17 @@ export default {
   methods: {
     async registerSubmit() {
       let rulg = /^.{6,16}$/
-      console.log('1111');
       if(rulg.test(this.model.username) && rulg.test(this.model.password)) {
         const res = await this.$http.post('/login', this.model)
-        console.log(2222);
         this.$msg.fail(res.data.msg)
+        if(res.data.code == 301 || res.data.code ==302) {
+          return
+        }
+        localStorage.setItem('token', res.data.token)
+        localStorage.setItem('id', res.data.id)
+        setTimeout(() =>{
+          this.$router.push('/userinfo')
+        }, 1000)
       } else {
         this.$msg.fail('格式不正确，重新输入')
       }
