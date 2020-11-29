@@ -22,9 +22,7 @@ export default {
     methods: {
         async UserinfoData() {
             const res = await this.$http.get('/user/' + localStorage.getItem('id'),{
-                headers: {
-                    'Authorization':'Bearer ' + localStorage.getItem('token')
-                }
+
             })
             this.model = res.data[0]
         }
