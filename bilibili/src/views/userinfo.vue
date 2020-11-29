@@ -2,7 +2,7 @@
   <div class="userinfo">
       <nav-bar></nav-bar>
       <img src="../assets/bannerTop_new.png" alt="" class="backimg">
-      <user-detail></user-detail>
+      <user-detail :userInfo="model"></user-detail>
   </div>
 </template>
 
@@ -10,9 +10,27 @@
 import NavBar from '../components/common/Navbar.vue'
 import userDetail from '../components/userComponent/userDetail.vue'
 export default {
+    data() {
+        return{
+            model: {}
+        }
+    },
     components: {
         NavBar,
         userDetail
+    },
+    methods: {
+        async UserinfoData() {
+            const res = await this.$http.get('/user/' + localStorage.getItem('id'),{
+                headers: {
+                    'Authorization':'Bearer ' + localStorage.getItem('token')
+                }
+            })
+            this.model = res.data[0]
+        }
+    },
+    created() {
+        this.UserinfoData()
     }
 }
 </script>
