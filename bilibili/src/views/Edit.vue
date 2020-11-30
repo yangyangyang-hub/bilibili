@@ -3,10 +3,13 @@
       <div style="margin-bottom:2.778vw">
           <nav-bar></nav-bar>
       </div>
-      <edit-banner left="头像">
-          <img src="../assets/default_img.jpg" alt="" slot="right" v-if="model.head_img">
-          <img src="../assets/default_img.jpg" alt="" slot="right" v-else>
-      </edit-banner>
+      <div class="uploadfile">
+          <van-uploader preview-size="100vw" class="uploadimg" :after-read="afterRead" />
+          <edit-banner left="头像">
+            <img :src="model.user_img" alt="" slot="right" v-if="model.user_img">
+            <img src="../assets/default_img.jpg" alt="" slot="right" v-else>
+          </edit-banner>
+      </div>
       <edit-banner left="昵称">
           <a href="javascript:;" slot="right">{{model.name}}</a>
       </edit-banner>
@@ -37,6 +40,13 @@ export default {
         async selectUser() {
             const res = await this.$http.get('/user/' + localStorage.getItem('id'))
             this.model = res.data[0]
+        },
+        async afterRead(file) {
+            const fromdata = new FormData()
+            fromdata.append('file', file.file)
+           
+            const res = await this.$http.post('/upload', fromdata)
+            this.model.user_img = res.data.url
         }
     },
     created(){
@@ -45,7 +55,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped lang="less">
 
 .edit_view a {
     color: #333;
@@ -54,5 +64,13 @@ export default {
     height: 46px;
     width: 46px;
     border-radius: 50%;
+}
+.uploadfile {
+    position: relative;
+    overflow: hidden;
+    .uploadimg {
+        opacity: 0;
+        position: absolute;
+    }
 }
 </style>
