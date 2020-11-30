@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import userinfo from '../views/userinfo.vue'
+import edit from '../views/Edit.vue'
 
 import register from '@/views/register.vue'
 
@@ -18,6 +19,12 @@ const routes = [
   },{
     path: '/userinfo',
     component: userinfo,
+    meta:{
+      istoken: true
+    }
+  },{
+    path: '/edit',
+    component: edit,
     meta:{
       istoken: true
     }
