@@ -17,7 +17,10 @@ const routes = [
     component: Login
   },{
     path: '/userinfo',
-    component: userinfo
+    component: userinfo,
+    meta:{
+      istoken: true
+    }
   }
 ]
 
@@ -25,7 +28,15 @@ const routes = [
 const router = new VueRouter({
   routes,
   mode: 'history'
+})
 
+router.beforeEach((to, from, next) => {
+  if (!localStorage.getItem('token') && !localStorage.getItem('id') && to.meta.istoken == true) {
+    router.push('/login')
+    Vue.prototype.$msg.fail('请重新登录')
+    return
+  }
+  next()
 })
 
 export default router
