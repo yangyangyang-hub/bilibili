@@ -11,6 +11,10 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/',
+    component: Home
+  },
+  {
     path: '/register',
     component: register
   },{

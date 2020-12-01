@@ -1,13 +1,43 @@
 <template>
   <div class="home">
+    <nav-bar></nav-bar>
+    <van-tabs v-model="active">
+      <van-tab v-for="(item, index) in category" :key="index" :title="item.title">
+        {{index}}
+      </van-tab>
+    </van-tabs>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'Home',
-  components: {
 
+import NavBar from '../components/common/Navbar.vue'
+
+export default {
+  data() {
+    return {
+      category: [],
+      active: 0
+    }
+  },
+  components: {
+    NavBar
+  },
+  methods: {
+    async selectCategory() {
+      const res = await this.$http.get('/category')
+      this.changeCategory(res.data)
+      this.category = res.data
+    },
+    changeCategory(data) {
+      const category1 = data.map((item, index) => {
+        item.list = []
+        return item
+      })
+    }
+  },
+  created() {
+    this.selectCategory()
   }
 }
 </script>
