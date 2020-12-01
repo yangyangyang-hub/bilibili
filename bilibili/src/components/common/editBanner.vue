@@ -1,15 +1,22 @@
 <template>
-  <div  class="edit_banner">
-      <span>{{left}}</span>
-      <span>
-          <slot name="right"></slot>
-      </span>
-  </div>
+    <div @click="bannerClick">
+      <div  class="edit_banner">
+          <span>{{left}}</span>
+          <span>
+              <slot name="right"></slot>
+          </span>
+      </div>
+    </div>
 </template>
 
 <script>
 export default {
-    props: ['left']
+    props: ['left'],
+    methods: {
+        bannerClick() {
+            this.$emit('bannerClick')
+        }
+    }
 }
 </script>
     

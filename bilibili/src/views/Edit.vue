@@ -10,14 +10,23 @@
             <img src="../assets/default_img.jpg" alt="" slot="right" v-else>
           </edit-banner>
       </div>
-      <edit-banner left="昵称">
+      <edit-banner left="昵称" @bannerClick="show = true">
           <a href="javascript:;" slot="right">{{model.name}}</a>
       </edit-banner>
       <edit-banner left="账号">
           <a href="javascript:;" slot="right">{{model.username}}</a>
       </edit-banner>
       <edit-banner left="性别"></edit-banner>
-      <edit-banner left="个性签名"></edit-banner> 
+      <edit-banner left="个性签名" @bannerClick="textshow = true"></edit-banner> 
+
+      <van-dialog v-model="show" title="昵称" show-cancel-button @confirm="confirmClick" @cancel="content = ''">
+        <van-field v-model="content" autofous />
+      </van-dialog>
+
+      <van-dialog v-model="textshow" title="个性签名" show-cancel-button @confirm="textareaClick" @cancel="content = ''">
+        <van-field v-model="content" type="textarea" autofous />
+      </van-dialog>
+
   </div>
 </template>
 
@@ -29,7 +38,10 @@ import editBanner from '../components/common/editBanner.vue'
 export default {
     data() {
         return {
-            model: {}
+            model: {},
+            show: false,
+            textshow: false,
+            content: '',
         }
     },
     components: {
@@ -47,11 +59,26 @@ export default {
            
             const res = await this.$http.post('/upload', fromdata)
             this.model.user_img = res.data.url
+            this.UserUpdate()
+        },
+        async UserUpdate() {
+            const res = await this.$http.post('/update/' + localStorage.getItem('id'), this.model)
+        },
+        confirmClick() {
+            this.model.name = this.content
+            this.UserUpdate()
+            this.content = ''
+        },
+        textareaClick() {
+            this.model.user_desc = this.content
+            this.UserUpdate()
+            this.content = ''
         }
     },
     created(){
         this.selectUser()
-    }
+    },
+    
 }
 </script>
 
