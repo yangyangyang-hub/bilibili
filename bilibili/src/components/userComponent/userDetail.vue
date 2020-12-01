@@ -2,7 +2,7 @@
   <div class="user_detail">
       <div>
           <div class="user_img">
-              <img src="userInfo.user_img" alt="" v-if="userInfo.user_img">
+              <img :src="userInfo.user_img" alt="" v-if="userInfo.user_img">
             <img src="../../assets/default_img.jpg" alt="" v-else>
           </div>
             <div class="user_edit">

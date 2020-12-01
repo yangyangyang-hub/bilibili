@@ -20,6 +20,7 @@
           <a href="javascript:;" slot="right">{{model.gender == 1 ? '男' : '女'}}</a>
       </edit-banner>
       <edit-banner left="个性签名" @bannerClick="textshow = true"></edit-banner> 
+      <div class="editback" @click="$router.back()">返回个人中心</div>
 
       <van-dialog v-model="show" title="昵称" show-cancel-button @confirm="confirmClick" @cancel="content = ''">
         <van-field v-model="content" autofous />
@@ -117,5 +118,16 @@ export default {
         opacity: 0;
         position: absolute;
     }
+}
+.editback {
+    margin-top: 5.556vw;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:#999;
+    background-color:white;
+    padding: 4.167vw 0;
+    font-size: 4vw;
 }
 </style>
