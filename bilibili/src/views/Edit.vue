@@ -16,7 +16,9 @@
       <edit-banner left="账号">
           <a href="javascript:;" slot="right">{{model.username}}</a>
       </edit-banner>
-      <edit-banner left="性别"></edit-banner>
+      <edit-banner left="性别" @bannerClick="gendershow = true">
+          <a href="javascript:;" slot="right">{{model.gender == 1 ? '男' : '女'}}</a>
+      </edit-banner>
       <edit-banner left="个性签名" @bannerClick="textshow = true"></edit-banner> 
 
       <van-dialog v-model="show" title="昵称" show-cancel-button @confirm="confirmClick" @cancel="content = ''">
@@ -26,6 +28,8 @@
       <van-dialog v-model="textshow" title="个性签名" show-cancel-button @confirm="textareaClick" @cancel="content = ''">
         <van-field v-model="content" type="textarea" autofous />
       </van-dialog>
+
+      <van-action-sheet v-model="gendershow" cancel-text="取消" :actions="actions" @select="onSelect" />
 
   </div>
 </template>
@@ -41,7 +45,12 @@ export default {
             model: {},
             show: false,
             textshow: false,
+            gendershow: false,
             content: '',
+            actions: [
+                {name: '男' , value: 1},
+                {name: '女', value: 0}
+            ]
         }
     },
     components: {
@@ -63,6 +72,9 @@ export default {
         },
         async UserUpdate() {
             const res = await this.$http.post('/update/' + localStorage.getItem('id'), this.model)
+            if (res.data.code == 200) {
+                this.$msg.fail('修改成功')
+            }
         },
         confirmClick() {
             this.model.name = this.content
@@ -73,6 +85,12 @@ export default {
             this.model.user_desc = this.content
             this.UserUpdate()
             this.content = ''
+        },
+        onSelect(data) {
+            this.model.gender = data.value
+            this.UserUpdate()
+            this.gendershow = false
+
         }
     },
     created(){

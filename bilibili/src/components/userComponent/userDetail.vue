@@ -35,7 +35,7 @@
 
 <script>
 export default {
-    props: ['userInfo']
+    props: ['userInfo'],
 }
 </script>
 
