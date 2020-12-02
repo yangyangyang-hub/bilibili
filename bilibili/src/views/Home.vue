@@ -1,9 +1,16 @@
 <template>
   <div class="home">
     <nav-bar></nav-bar>
-    <van-tabs v-model="active">
+    <van-tabs v-model="active" swipeable sticky>
       <van-tab v-for="(item, index) in category" :key="index" :title="item.title">
-        {{index}}
+        <div class="detailparent">
+          <detail 
+          class="detailitem"
+          v-for="(categoryitem, categoryindex) in item.list" 
+          :key="categoryindex"
+          :detailitem="categoryitem">
+          </detail>
+        </div>
       </van-tab>
     </van-tabs>
   </div>
@@ -11,6 +18,7 @@
 
 <script>
 
+import Detail from './Detail.vue'
 import NavBar from '../components/common/Navbar.vue'
 
 export default {
@@ -21,7 +29,8 @@ export default {
     }
   },
   components: {
-    NavBar
+    NavBar,
+    Detail
   },
   methods: {
     async selectCategory() {
@@ -37,6 +46,7 @@ export default {
         return item
       })
        this.category = category1
+       this.selectArticle()
     },
     async selectArticle() {
       const categoryitem = this.categoryItem()
@@ -50,7 +60,6 @@ export default {
     },
     categoryItem() {
       const categoryitem = this.category[this.active]
-            console.log(222);
       return categoryitem
     }
   },
@@ -64,3 +73,18 @@ export default {
   }
 }
 </script>
+
+<style lang="less" scoped>
+.home {
+  background-color: white;
+}
+.detailparent {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  .detailitem{
+    margin: 1.398vw 0;
+    width: 45%;
+  }
+}
+</style>

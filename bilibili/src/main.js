@@ -12,6 +12,9 @@ Vue.prototype.$msg = Toast
 import http from '../http.js'
 Vue.prototype.$http = http
 
+// 引入字体文件
+import './assets/style.css'
+
 
 Vue.config.productionTip = false
 
