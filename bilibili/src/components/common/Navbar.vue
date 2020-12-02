@@ -10,7 +10,8 @@
           </p>
       </div>
       <div>
-          <img :src="imgUrl" alt="" @click="$router.push('/edit')">
+          <img :src="imgUrl" alt="" @click="$router.push('/userinfo')" v-if="imgUrl">
+          <img src="../../assets/default_img.jpg" alt="" @click="$router.push('/login')" v-else>
           <p>下载APP</p>
       </div>
   </div>
@@ -24,8 +25,10 @@ export default {
         }
     },
     async mounted() {
-        const res = await this.$http.get('/user/' + localStorage.getItem('id'))
-        this.imgUrl = res.data[0].user_img
+        if (localStorage.getItem('token')) {
+            const res = await this.$http.get('/user/' + localStorage.getItem('id'))
+            this.imgUrl = res.data[0].user_img
+        }
 
     }
 }

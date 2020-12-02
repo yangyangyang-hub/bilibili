@@ -5,8 +5,8 @@
         <span>(4070)</span>
     </p>
     <div class="commentMyinfo">
-        <img :src="a" alt="" v-if="a">
-        <img src="../../assets/default_img.jpg" alt="" v-if="!a">
+        <img :src="a" alt="" v-if="myuser">
+        <img src="../../assets/default_img.jpg" alt="" v-else>
         <input type="text" placeholder="说点什么吧" >
         <button @focus="commentPublish">发表</button>
     </div>
@@ -34,12 +34,15 @@ export default {
                 this.$msg.file('请先登录')
                 return
             }
-            
+
         }
     },
     created() {
-        // 评论
-        this.myUserinfo()
+        if (localStorage.getItem('token')) {
+            // 评论
+            this.myUserinfo()
+        }
+
     }
 }
 </script>
