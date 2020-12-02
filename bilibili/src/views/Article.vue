@@ -31,9 +31,13 @@
                 </p>
              </div>
          </div>
-         <div class="detailparent">
-             <detail class="detailitem" v-for="(item, index) in commendList" :key="index" :detailitem="item"></detail>
-         </div>
+
+             <div class="detailparent">
+                   <detail class="detailitem" v-for="(item, index) in commendList" :key="index" :detailitem="item"></detail>
+             </div>
+
+             <comment-title></comment-title>
+
      </div>
   </div>
 </template>
@@ -42,6 +46,7 @@
 
 import NavBar from '../components/common/Navbar.vue'
 import Detail from './Detail.vue'
+import CommentTitle from '../components/article/commentTitle.vue'
 
 export default {
     data() {
@@ -54,6 +59,7 @@ export default {
     components: {
         NavBar,
         Detail,
+        CommentTitle,
     },
     methods: {
         async articleitemDate() {
@@ -63,7 +69,8 @@ export default {
         async commendData() {
             const res = await this.$http.get('/commend')
             this.commendList = res.data
-        }
+        },
+
     },
     created() {
         this.articleitemDate(),
@@ -72,6 +79,7 @@ export default {
     watch: {
         $route() {
             this.articleitemDate(),
+            // 获取推荐视频
             this.commendData()
         }
     }
