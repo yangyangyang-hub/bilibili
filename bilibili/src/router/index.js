@@ -14,11 +14,14 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/article/:id',
-    component: Article
+    component: Article,
   },
   {
     path: '/',
-    component: Home
+    component: Home,
+    meta: {
+      keepalive: true
+    }
   },
   {
     path: '/register',

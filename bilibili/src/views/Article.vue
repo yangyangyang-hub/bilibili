@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="model">
      <nav-bar></nav-bar>
      <div class="detailinfo">
          <div class="video">
@@ -7,11 +7,11 @@
          </div>
          <div class="detailinfo_text">
              <div>
-                 <span>{{a}}</span>
+                 <span>{{model.category.title}}</span>
                  <span>{{model.name}}</span>
              </div>
              <div>
-                 <span>{{b}}</span>
+                 <span>{{model.userinfo.name}}</span>
                  <span>146.4万次观看</span>
                  <span>588弹幕</span>
                  <span>{{model.date}}</span>
@@ -43,9 +43,8 @@ import NavBar from '../components/common/Navbar.vue'
 export default {
     data() {
         return {
-            model: {},
-            a: '',
-            b: ''
+            model: null
+
         }
     },
     components: {
@@ -55,8 +54,6 @@ export default {
         async articleitemDate() {
             const res = await this.$http.get('/article/' + this.$route.params.id)
             this.model = res.data[0]
-            this.a = this.model.category.title
-            this.b = this.model.userinfo.name
         }
     },
     created() {
