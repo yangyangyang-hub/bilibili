@@ -3,6 +3,13 @@
     <nav-bar></nav-bar>
     <van-tabs v-model="active" swipeable sticky>
       <van-tab v-for="(item, index) in category" :key="index" :title="item.title">
+        <van-list
+        :immediate-check="false"
+        v-model="item.loading"
+        :finished="item.finished"
+        finished-text="我也是有底线的"
+        @load="onLoad"
+        >
         <div class="detailparent">
           <detail 
           class="detailitem"
@@ -11,6 +18,9 @@
           :detailitem="categoryitem">
           </detail>
         </div>
+
+        </van-list>
+
       </van-tab>
     </van-tabs>
   </div>
@@ -42,12 +52,15 @@ export default {
       const category1 = data.map((item, index) => {
         item.list = []
         item.page = 0
+        item.finished = false
+        item.loading = false
         item.pagesize = 10
         return item
       })
        this.category = category1
        this.selectArticle()
     },
+    // 获取数据
     async selectArticle() {
       const categoryitem = this.categoryItem()
       const res = await this.$http.get('/detail/' + categoryitem._id, {
@@ -56,11 +69,24 @@ export default {
           pagesize: categoryitem.pagesize
         }
       })
-      categoryitem.list = res.data
+      categoryitem.list.push(...res.data)
+      categoryitem.loading = false
+      if(res.data.length < categoryitem.pagesize) {
+        categoryitem.finished = true
+      }
     },
     categoryItem() {
       const categoryitem = this.category[this.active]
       return categoryitem
+    },
+    onLoad() {
+      const categoryitem = this.categoryItem()
+      
+      setTimeout(() => {
+        categoryitem.page += 1
+        this.selectArticle()
+      }, 1000)
+     
     }
   },
   watch: {
