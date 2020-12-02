@@ -4,12 +4,18 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import userinfo from '../views/userinfo.vue'
 import edit from '../views/Edit.vue'
+import Article from '../views/Article.vue'
+
 
 import register from '@/views/register.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/article/:id',
+    component: Article
+  },
   {
     path: '/',
     component: Home
