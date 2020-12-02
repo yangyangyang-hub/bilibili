@@ -30,7 +30,9 @@
                     <span class="">分享</span>
                 </p>
              </div>
-             
+         </div>
+         <div class="detailparent">
+             <detail class="detailitem" v-for="(item, index) in commendList" :key="index" :detailitem="item"></detail>
          </div>
      </div>
   </div>
@@ -39,25 +41,39 @@
 <script>
 
 import NavBar from '../components/common/Navbar.vue'
+import Detail from './Detail.vue'
 
 export default {
     data() {
         return {
-            model: null
+            model: null,
+            commendList: null,
 
         }
     },
     components: {
-        NavBar
+        NavBar,
+        Detail,
     },
     methods: {
         async articleitemDate() {
             const res = await this.$http.get('/article/' + this.$route.params.id)
             this.model = res.data[0]
+        },
+        async commendData() {
+            const res = await this.$http.get('/commend')
+            this.commendList = res.data
         }
     },
     created() {
-        this.articleitemDate()
+        this.articleitemDate(),
+        this.commendData()
+    },
+    watch: {
+        $route() {
+            this.articleitemDate(),
+            this.commendData()
+        }
     }
 }
 </script>
@@ -112,5 +128,14 @@ export default {
               }
           }
       }
+}
+.detailparent {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  .detailitem{
+    margin: 1.398vw 0;
+    width: 45%;
+  }
 }
 </style>
