@@ -37,6 +37,7 @@
              </div>
 
              <comment-title></comment-title>
+             <comment></comment>
 
      </div>
   </div>
@@ -47,6 +48,7 @@
 import NavBar from '../components/common/Navbar.vue'
 import Detail from './Detail.vue'
 import CommentTitle from '../components/article/commentTitle.vue'
+import Comment from '../components/article/comment.vue'
 
 export default {
     data() {
@@ -60,6 +62,7 @@ export default {
         NavBar,
         Detail,
         CommentTitle,
+        Comment
     },
     methods: {
         async articleitemDate() {

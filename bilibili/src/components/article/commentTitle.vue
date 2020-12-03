@@ -30,8 +30,8 @@ export default {
             this.a = this.myuser.user_img
         },
         commentPublish() {
-            if(!this.myuser && !localStorage.getItem('token') && localStorage.getItem('id')){
-                this.$msg.file('请先登录')
+            if(!this.myuser && !localStorage.getItem('token') && !localStorage.getItem('id')){
+                this.$msg.fail('请先登录')
                 return
             }
 
@@ -50,7 +50,7 @@ export default {
 <style lang="less">
 
 .comment {
-    padding: 8.333vw 2.778vw;
+    padding: 8.333vw 2.778vw 0 2.778vw;
     .comment-title {
         span:nth-child(2) {
             color: #aaa;
