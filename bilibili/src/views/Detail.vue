@@ -5,7 +5,7 @@
             <img src="../assets/bgc.jpg" alt="" style="width:100%">
             <div class="bottom">
                 <div class="icon-play2"><span class="video">123</span></div>
-                <div class="icon-file-text"><span class="comment">{{!detailitem.commentlen ? 66: detailitem.commentlen}}</span></div>  
+                <div class="icon-file-text"><span>{{!detailitem.commentlen ? 66: detailitem.commentlen}}</span></div>  
             </div>
         </div>
         <p>{{detailitem.name}}</p>

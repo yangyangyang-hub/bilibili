@@ -3,7 +3,7 @@
      <nav-bar></nav-bar>
      <div class="detailinfo">
          <div class="video">
-             <video :src="model.content" controls="controls"></video>
+             <video src="../assets/111.mp4" controls="controls"></video>
          </div>
          <div class="detailinfo_text">
              <div>
@@ -35,11 +35,9 @@
              <div class="detailparent">
                    <detail class="detailitem" v-for="(item, index) in commendList" :key="index" :detailitem="item"></detail>
              </div>
-
-             <comment-title></comment-title>
-             <comment></comment>
-
      </div>
+     <comment-title :dataLength="lens"></comment-title>
+     <comment @lengthselect="len => lens = len"></comment>
   </div>
 </template>
 
@@ -55,6 +53,8 @@ export default {
         return {
             model: null,
             commendList: null,
+            a: '',
+            lens: null
 
         }
     },
@@ -66,8 +66,11 @@ export default {
     },
     methods: {
         async articleitemDate() {
+            console.log(222);
             const res = await this.$http.get('/article/' + this.$route.params.id)
             this.model = res.data[0]
+            this.a = this.model.content
+            console.log(this.lens);
         },
         async commendData() {
             const res = await this.$http.get('/commend')
@@ -76,6 +79,7 @@ export default {
 
     },
     created() {
+        console.log(111);
         this.articleitemDate(),
         this.commendData()
     },

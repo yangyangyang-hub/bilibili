@@ -2,7 +2,7 @@
   <div class="commentParent">
     <div v-for="(item , index) in commentList" :key="index">
       <div class="commentItem">
-        <div class="userImg">
+        <div class="userImg" v-if="item.userinfo">
           <img v-if="item.userinfo.user_img" :src="item.userinfo.user_img" alt="" />
           <img v-else src="../../assets/default_img.jpg" alt="">
         </div>
@@ -40,6 +40,9 @@ export default {
   methods: {
     async commentDate() {
       const res = await this.$http.get("/comment/" + this.$route.params.id);
+      if (res.data) {
+        this.$emit('lengthselect',res.data.length)
+      }
       this.commentList = this.changeCommentDate(res.data)
       console.log(this.commentList);
     },
@@ -65,6 +68,7 @@ export default {
 
 <style lang="less">
 .commentParent {
+    background-color: white;
     padding: 2.778vw 2.778vw;
     >div {
         border-bottom: 0.278vw solid #e7e7e7;

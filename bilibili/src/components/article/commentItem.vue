@@ -19,7 +19,7 @@
           {{ item.comment_content }}
         </div>
         <div v-else>
-          回复 xxxx :{{ item.comment_content }}
+          回复 <span>{{item.parent_user_info.nme}}</span> :{{ item.comment_content }}
         </div>
       </div>
 

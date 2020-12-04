@@ -2,7 +2,7 @@
   <div class="comment">
     <p class="comment-title">
         <span>评论</span>
-        <span>(4070)</span>
+        <span>{{dataLength}}</span>
     </p>
     <div class="commentMyinfo">
         <img :src="a" alt="" v-if="myuser">
@@ -15,7 +15,7 @@
 
 <script>
 export default {
-
+    props: ['dataLength'],
     data() {
         return {
             myuser:null,
@@ -51,6 +51,7 @@ export default {
 
 .comment {
     padding: 8.333vw 2.778vw 0 2.778vw;
+    background-color: #fff;
     .comment-title {
         span:nth-child(2) {
             color: #aaa;
@@ -58,6 +59,7 @@ export default {
         }
     }
     .commentMyinfo {
+        background-color: white;
         padding: 2.778vw 0;
         display: flex;
         img{
