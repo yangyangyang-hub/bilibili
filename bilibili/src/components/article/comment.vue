@@ -44,7 +44,6 @@ export default {
         this.$emit('lengthselect',res.data.length)
       }
       this.commentList = this.changeCommentDate(res.data)
-      console.log(this.commentList);
     },
     changeCommentDate(data) {
         function fn(temp) {

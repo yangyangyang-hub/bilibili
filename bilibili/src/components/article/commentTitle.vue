@@ -7,7 +7,7 @@
     <div class="commentMyinfo">
         <img :src="a" alt="" v-if="myuser">
         <img src="../../assets/default_img.jpg" alt="" v-else>
-        <input type="text" placeholder="说点什么吧" >
+        <input type="text" placeholder="说点什么吧" v-model="comcontent">
         <button @focus="commentPublish">发表</button>
     </div>
   </div>
@@ -19,13 +19,13 @@ export default {
     data() {
         return {
             myuser:null,
-            a: ''
+            a: '',
+            comcontent: ''
         }
     },
     methods: {
         async myUserinfo() {
             const res = await this.$http.get('/user/' + localStorage.getItem('id'))
-            console.log(res);
             this.myuser = res.data[0]
             this.a = this.myuser.user_img
         },
@@ -34,7 +34,7 @@ export default {
                 this.$msg.fail('请先登录')
                 return
             }
-
+            this.$emit('postcomment', this.comcontent)
         }
     },
     created() {

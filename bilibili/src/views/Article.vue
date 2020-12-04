@@ -36,7 +36,7 @@
                    <detail class="detailitem" v-for="(item, index) in commendList" :key="index" :detailitem="item"></detail>
              </div>
      </div>
-     <comment-title :dataLength="lens"></comment-title>
+     <comment-title :dataLength="lens" @postcomment="postSuccess"></comment-title>
      <comment @lengthselect="len => lens = len"></comment>
   </div>
 </template>
@@ -54,7 +54,13 @@ export default {
             model: null,
             commendList: null,
             a: '',
-            lens: null
+            lens: null,
+            Postcom: {
+                comment_content:'',
+                comment_date: '',
+                parent_id: null,
+                article_id: null,
+            }
 
         }
     },
@@ -66,16 +72,35 @@ export default {
     },
     methods: {
         async articleitemDate() {
-            console.log(222);
             const res = await this.$http.get('/article/' + this.$route.params.id)
             this.model = res.data[0]
             this.a = this.model.content
-            console.log(this.lens);
         },
         async commendData() {
             const res = await this.$http.get('/commend')
             this.commendList = res.data
         },
+        // 输入评论
+        async postSuccess(res) {
+            // 处理评论的时间
+            const date = new Date()
+            let m = date.getMonth() + 1
+            let d = date.getDate()
+            if (m<10) {
+                m = '0' + m
+            }
+            if (d<10) {
+                d = '0' + d
+            }
+            let str = `${m}-${d}`
+            this.Postcom.comment_date = str
+
+            this.Postcom.comment_content = res
+            this.Postcom.article_id = this.$route.params.id
+            console.log(this.Postcom);
+            const result = await this.$http.post('/comment_post/' + localStorage.getItem('id'), this.Postcom)
+            
+        }
 
     },
     created() {
