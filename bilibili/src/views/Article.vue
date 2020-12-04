@@ -36,8 +36,8 @@
                    <detail class="detailitem" v-for="(item, index) in commendList" :key="index" :detailitem="item"></detail>
              </div>
      </div>
-     <comment-title :dataLength="lens" @postcomment="postSuccess"></comment-title>
-     <comment @lengthselect="len => lens = len"></comment>
+     <comment-title :dataLength="lens" @postcomment="postSuccess" ref="commentIpt" ></comment-title>
+     <comment @lengthselect="len => lens = len" @publishClick="PostChildClick" ref="commentPulish"></comment>
   </div>
 </template>
 
@@ -99,7 +99,13 @@ export default {
             this.Postcom.article_id = this.$route.params.id
             console.log(this.Postcom);
             const result = await this.$http.post('/comment_post/' + localStorage.getItem('id'), this.Postcom)
-            
+            this.$refs.commentPulish.commentDate()
+
+        },
+        PostChildClick(id) {
+            this.Postcom.parent_id = id
+            this.$refs.commentIpt.focusIpt()
+
         }
 
     },

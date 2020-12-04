@@ -16,10 +16,10 @@
       </div>
       <div class="commentContent">
         <div v-if="!temp">
-          {{ item.comment_content }}
+          {{ item.comment_content }} <span class="publish">回复</span>
         </div>
         <div v-else>
-          回复 <span>{{item.parent_user_info.nme}}</span> :{{ item.comment_content }}
+          回复 <span style="color: #478ef0">{{item.parent_user_info.name}}</span> :{{ item.comment_content }} <span class="publish">回复</span>
         </div>
       </div>
 
@@ -53,6 +53,15 @@ export default {
             justify-content: space-between;
             margin-bottom: 1.389vw;
         }
+    }
+    .commentContent {
+      position: relative;
+      margin-bottom: 2.778vw;
+      .publish{
+        color: red;
+        position: absolute;
+        right: 4.167vw;
+      }
     }
   }
 }

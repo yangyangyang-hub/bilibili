@@ -14,6 +14,7 @@
           </p>
           <div>
               {{item.comment_content}}
+              <span class="publishes" @click="publishClick(item.comment_id)">回复</span>
           </div>
         </div>
       </div>
@@ -57,6 +58,10 @@ export default {
             return arr1
         }
         return fn(null)
+    },
+    // 回复评论
+    publishClick(id) {
+      this.$emit('publishClick', id)
     }
   },
   created() {
@@ -84,6 +89,7 @@ export default {
         }
         .commentContent {
             flex: 1;
+            position: relative;
             p {
                 font-size: 3.61vw;
                 color: #555;
@@ -93,6 +99,11 @@ export default {
             }
             div {
                 font-size: 3.611vw;
+            }
+            .publishes{
+              position: absolute;
+              right: 0;
+              color: red;
             }
         }
     }

@@ -7,7 +7,7 @@
     <div class="commentMyinfo">
         <img :src="a" alt="" v-if="myuser">
         <img src="../../assets/default_img.jpg" alt="" v-else>
-        <input type="text" placeholder="说点什么吧" v-model="comcontent">
+        <input type="text" placeholder="说点什么吧" v-model="comcontent" ref="Postipt">
         <button @focus="commentPublish">发表</button>
     </div>
   </div>
@@ -35,14 +35,21 @@ export default {
                 return
             }
             this.$emit('postcomment', this.comcontent)
+            this.comcontent = ''
+        },
+        focusIpt() {
+            this.$refs.Postipt.focus()
         }
     },
     created() {
         if (localStorage.getItem('token')) {
             // 评论
             this.myUserinfo()
+           
         }
-
+    },
+    updated() {
+        this.focusIpt()
     }
 }
 </script>
