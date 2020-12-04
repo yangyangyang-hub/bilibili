@@ -13,13 +13,14 @@
             <span>{{item.comment_date}}</span>
           </p>
           <div>
-              {{item.comment_content}}
-              <span class="publishes" @click="publishClick(item.comment_id)">回复</span>
+            <!-- 一级评论 -->
+              {{item.comment_content}} 
+              <span class="publishes" @postChild="nihao" @click="publishClick(item.comment_id)">回复</span>
           </div>
         </div>
       </div>
       <div style="padding-left:8.333vw">
-      <comment-item :commentChild="item.child"></comment-item>
+      <comment-item :commentChild="item.child" @postpublish="publishClick"></comment-item>
       </div>
     </div>
   </div>
@@ -39,6 +40,9 @@ export default {
         commentItem
     },
   methods: {
+    nihao() {
+      console.log(11111);
+    },
     async commentDate() {
       const res = await this.$http.get("/comment/" + this.$route.params.id);
       if (res.data) {

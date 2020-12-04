@@ -16,14 +16,18 @@
       </div>
       <div class="commentContent">
         <div v-if="!temp">
-          {{ item.comment_content }} <span class="publish">回复</span>
+          <!-- 二级评论 -->
+          {{ item.comment_content}}
+          <span class="publish" @click="PostItemcomment(item.comment_id), zyy(item.comment_id)"  >回复</span>
         </div>
         <div v-else>
-          回复 <span style="color: #478ef0">{{item.parent_user_info.name}}</span> :{{ item.comment_content }} <span class="publish">回复</span>
+          回复 <span style="color: #478ef0">{{item.parent_user_info.name}}</span>
+          :{{ item.comment_content }}
+          <span class="publish" @click="PostItemcomment(item.comment_id)">回复</span>
         </div>
       </div>
 
-      <commentchild-item :commentChild="item.child" :temp="true"></commentchild-item>
+      <commentchild-item :commentChild="item.child" :temp="true" @postChild="postChild"></commentchild-item>
     </div>
   </div>
 </template>
@@ -32,6 +36,19 @@
 export default {
   name: "commentchildItem",
   props: ["commentChild", 'temp'],
+  methods: {
+    zyy(id){
+      this.$emit('postpublish', id)
+    },
+    PostItemcomment(id) {
+
+      this.$emit('postChild', id)
+    },
+    postChild(id) {
+      this.PostItemcomment(id)
+      this.$emit('postpublish', id)
+    }
+  }
 };
 </script>
 

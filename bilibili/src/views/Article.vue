@@ -100,6 +100,7 @@ export default {
             console.log(this.Postcom);
             const result = await this.$http.post('/comment_post/' + localStorage.getItem('id'), this.Postcom)
             this.$refs.commentPulish.commentDate()
+            this.Postcom.parent_id = null
 
         },
         PostChildClick(id) {
