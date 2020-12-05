@@ -20,10 +20,10 @@
           <p @click="collectionClick" :class="{activeColor:collectionActive}">
             <span class="icon-star-full"></span>
             <span class="">收藏</span>
-          </p>
-          <p>
-            <span class="icon-box-add"></span>
-            <span class="">缓存</span>
+          </p >
+          <p @click="subscriptClick" :class="{activeColor:subscriptionActive}">
+            <span class="icon-bubble"></span>
+            <span class="">关注</span>
           </p>
           <p>
             <span class="icon-redo2"></span>
@@ -73,7 +73,8 @@ export default {
         parent_id: null,
         article_id: null,
       },
-      collectionActive: null
+      collectionActive: null,
+      subscriptionActive: null
     };
   },
   components: {
@@ -83,10 +84,14 @@ export default {
     Comment,
   },
   methods: {
+    //   获取文章信息
     async articleitemDate() {
       const res = await this.$http.get("/article/" + this.$route.params.id);
       this.model = res.data[0];
       this.a = this.model.content;
+      if (this.model) {
+          this.subscriptionInit()
+      }
     },
     async commendData() {
       const res = await this.$http.get("/commend");
@@ -149,13 +154,41 @@ export default {
             })
             this.collectionActive = res.data.success
         }
-    }
+    },
+        // 点击关注发帖用户
+    async subscriptClick() {
+      if (localStorage.getItem("token")) {
+        const res = await this.$http.post(
+          "/sub_scription/" + localStorage.getItem("id"),
+          { sub_id: this.model.userid }
+        );
+        if(res.data.msg == '关注成功') {
+            this.subscriptionActive = true
+        } else {
+            this.subscriptionActive = false
+        }
+        this.$msg.fail(res.data.msg)
+      }
+    },
+    // 进入页面获取是否关注
+    async subscriptionInit() {
+        if(localStorage.getItem('token')) {
+            const res = await this.$http.get( "/sub_scription/" + localStorage.getItem("id"), {
+                params:{
+                    sub_id:this.model.userid
+                }
+            })
+            this.subscriptionActive = res.data.success
+        }
+    },
+
 
   },
   created() {
     console.log(111);
     this.articleitemDate(), this.commendData();
     this.collectionInit()
+    
   },
   watch: {
     $route() {
