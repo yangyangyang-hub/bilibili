@@ -11,7 +11,7 @@
           <span>{{ model.name }}</span>
         </div>
         <div>
-          <span>{{ model.userinfo.name }}</span>
+          <span v-if="model.userinfo">{{ model.userinfo.name }}</span>
           <span>146.4万次观看</span>
           <span>588弹幕</span>
           <span>{{ model.date }}</span>
@@ -185,7 +185,6 @@ export default {
 
   },
   created() {
-    console.log(111);
     this.articleitemDate(), this.commendData();
     this.collectionInit()
     
