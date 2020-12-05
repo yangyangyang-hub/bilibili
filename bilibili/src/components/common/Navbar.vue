@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
       <div class="logo">
-          <img src="../../assets/logo.png" alt="" @click="$router.push('/')">
+          <img src="../../assets/logo.png" alt="" @click="zz">
       </div>
       <div>
           <p>
@@ -10,7 +10,7 @@
           </p>
       </div>
       <div>
-          <img :src="imgUrl" alt="" @click="$router.push('/userinfo')" v-if="imgUrl">
+          <img :src="imgUrl" alt="" @click="ss" v-if="imgUrl">
           <img src="../../assets/default_img.jpg" alt="" @click="$router.push('/login')" v-else>
           <p>下载APP</p>
       </div>
@@ -24,13 +24,31 @@ export default {
             imgUrl: ''
         }
     },
+    methods: {
+        ss() {
+            console.log(this.$route)
+            if (this.$route.path == '/userinfo') {
+                return
+            } else {
+                this.$router.push('/userinfo')
+            }   
+        },
+        zz() {
+            if (this.$route.path == '/') {
+                return
+            } else {
+                this.$router.push('/')
+            }  
+        }
+        
+    },
     async mounted() {
         if (localStorage.getItem('token')) {
             const res = await this.$http.get('/user/' + localStorage.getItem('id'))
             this.imgUrl = res.data[0].user_img
         }
 
-    }
+    },
 }
 </script>
 

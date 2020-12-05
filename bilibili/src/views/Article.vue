@@ -187,6 +187,7 @@ export default {
   created() {
     this.articleitemDate(), this.commendData();
     this.collectionInit()
+    console.log(this.$route);
     
   },
   watch: {
